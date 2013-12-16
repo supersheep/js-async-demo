@@ -1,0 +1,16 @@
+{
+  "name": "js-async",
+  "version": "0.0.0",
+  "description": "js-async =======",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "event-proxy": "0.0.1",
+    "q": "~0.9.7",
+    "async": "~0.2.9"
+  }
+}
