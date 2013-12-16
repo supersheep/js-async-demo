@@ -54,5 +54,13 @@ function walkDir(dir,dealer,walkDirDone){
 }
 
 module.exports = function(dir,done){
-	walkDir(dir,dealFile,done);
+	walkDir(dir,dealFile,function(err,result){
+		if(err){return done(err);}
+		if(result){
+			console.log("no sad now");
+		}else{
+			console.log("already no sad");
+		}
+		done();
+	});
 };

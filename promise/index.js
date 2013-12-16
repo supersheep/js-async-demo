@@ -1,14 +1,12 @@
 var Q = require("q");
 var fs = require("fs");
 var path = require("path");
-Q.longStackSupport = true;
 
 function readFile(file){
 	return Q.nfcall(fs.readFile, file, {encoding:"utf-8"});
 }
 
 function writeFile(file,content){
-	console.log("write file %s",file);
 	return Q.nfcall(fs.writeFile, file, content, {encoding:"utf-8"});
 }
 
@@ -28,6 +26,7 @@ function dealFile(file){
 		var regexp = /sad/g;
 		if(content.match(regexp)){
 			content = content.replace(regexp,"happy");
+			console.log("write file %s",file);
 			writeFile(file,content)
 			.then(function(){
 				deferred.resolve(true);
@@ -76,6 +75,11 @@ function dealDir(dir){
 module.exports = function(dir,done){
 	dealDir(dir)
 	.then(function(result){
-		done(null, result);
+		if(result){
+			console.log("no sad now");
+		}else{
+			console.log("already no sad");
+		}
+		done()
 	}).fail(done);
 }

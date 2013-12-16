@@ -2,9 +2,9 @@ var exec = require("child_process").exec;
 var async = require("async");
 var path = require("path");
 
-var tasks = ["async","promise"].map(function(module){
+function dealRootFactory(rootPath,module){
 	return function(done){
-		var command = "\nrm -rf result && cp -r source result";
+		var command = "\nrm -rf result && cp -r " + rootPath + " result";
 		console.log(command);
 		exec(command,function(err,stdout){
 			if(err){return done(err);}
@@ -13,9 +13,16 @@ var tasks = ["async","promise"].map(function(module){
 			mod( path.resolve("./result") ,done);
 		});
 	}
+}
+
+var tasks = ["async","promise"].map(function(module){
+	return dealRootFactory("source",module)
 });
 
-async.series(tasks,function(err,results){
-	if(err){throw err;}
-	console.log(results);
+var tasks_already_happy = ["async","promise"].map(function(module){
+	return dealRootFactory("source_no_sad",module);
 });
+
+
+
+async.series(tasks.concat(tasks_already_happy));
